@@ -1,4 +1,4 @@
-package com.ninhkle.chatroom.data
+package com.ninhkle.chatroom
 
 sealed class Screen(val route : String) {
     data object LoginScreen : Screen("loginscreen")
