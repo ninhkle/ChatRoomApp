@@ -10,19 +10,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.ninhkle.chatroom.data.Screen
+import com.ninhkle.chatroom.screen.LoginScreen
+import com.ninhkle.chatroom.screen.SignUpScreen
 import com.ninhkle.chatroom.ui.theme.ChatRoomTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             ChatRoomTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    NavigationGraph(navController = navController)
                 }
             }
         }
@@ -30,17 +39,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ChatRoomTheme {
-        Greeting("Android")
+fun NavigationGraph(
+    navController: NavHostController
+){
+    NavHost(navController = navController, startDestination = Screen.SignUpScreen.route) {
+        composable(Screen.SignUpScreen.route) {
+            SignUpScreen (
+                onNavigateToLogin = { navController.navigate(Screen.LoginScreen.route) }
+            )
+        }
+        composable(Screen.LoginScreen.route) {
+            LoginScreen(
+                onNavigateToSignUp = { navController.navigate(Screen.SignUpScreen.route) }
+            )
+        }
     }
 }
+
+
