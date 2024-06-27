@@ -18,11 +18,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ninhkle.chatroom.viewmodel.AuthViewModel
 
 @Composable
 fun SignUpScreen(
+    authViewModel: AuthViewModel,
     onNavigateToLogin: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
@@ -51,7 +55,8 @@ fun SignUpScreen(
             label = { Text(text = "Password") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
+            visualTransformation = PasswordVisualTransformation()
         )
         OutlinedTextField(
             value = firstName,
@@ -70,7 +75,7 @@ fun SignUpScreen(
                 .padding(8.dp)
         )
         Button(onClick = {
-            /*TODO add signup function*/
+            authViewModel.signUp(email, password, firstName, lastName)
             email = ""
             password = ""
             firstName = ""
@@ -90,5 +95,5 @@ fun SignUpScreen(
 @Preview
 @Composable
 fun SignupScreenPreview() {
-    SignUpScreen(onNavigateToLogin = {})
+    SignUpScreen(authViewModel = viewModel(),onNavigateToLogin = {})
 }
