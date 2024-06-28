@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ninhkle.chatroom.screen.ChatRoomListScreen
 import com.ninhkle.chatroom.screen.LoginScreen
 import com.ninhkle.chatroom.screen.SignUpScreen
 import com.ninhkle.chatroom.ui.theme.ChatRoomTheme
@@ -56,6 +57,9 @@ fun NavigationGraph(
             ) {
                 navController.navigate(Screen.ChatRoomsScreen.route)
             }
+        }
+        composable(Screen.ChatRoomsScreen.route) {
+            ChatRoomListScreen()
         }
     }
 }
