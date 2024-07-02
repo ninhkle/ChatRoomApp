@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -72,7 +73,7 @@ fun ChatScreen(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
-            BasicTextField(
+            OutlinedTextField(
                 value = text.value,
                 onValueChange = { text.value = it },
                 textStyle = TextStyle.Default.copy(fontSize = 16.sp),
@@ -111,22 +112,22 @@ fun ChatMessageItem(message: Message) {
                 color = Color.White,
                 style = TextStyle(fontSize = 16.sp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = message.senderFirstName,
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-            )
-            Text(
-                text = formatTimestamp(message.timestamp), // Replace with logic
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-            )
         }
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = message.senderFirstName,
+            style = TextStyle(
+                fontSize = 12.sp,
+                color = Color.Gray
+            )
+        )
+        Text(
+            text = formatTimestamp(message.timestamp),
+            style = TextStyle(
+                fontSize = 12.sp,
+                color = Color.Gray
+            )
+        )
     }
 }
 
