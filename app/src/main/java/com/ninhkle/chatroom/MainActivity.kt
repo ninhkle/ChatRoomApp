@@ -1,8 +1,11 @@
 package com.ninhkle.chatroom
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ninhkle.chatroom.screen.ChatRoomListScreen
+import com.ninhkle.chatroom.screen.ChatScreen
 import com.ninhkle.chatroom.screen.LoginScreen
 import com.ninhkle.chatroom.screen.SignUpScreen
 import com.ninhkle.chatroom.ui.theme.ChatRoomTheme
@@ -38,6 +42,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
@@ -59,7 +64,14 @@ fun NavigationGraph(
             }
         }
         composable(Screen.ChatRoomsScreen.route) {
-            ChatRoomListScreen()
+            ChatRoomListScreen{
+                navController.navigate("${Screen.ChatScreen.route}/${it.id}")
+            }
+        }
+        composable("${Screen.ChatScreen.route}/{roomId}") {
+            val roomId: String = it.arguments?.getString("roomId") ?: ""
+            Log.d("ChatScreenRoute", "NavigationGraph: $roomId")
+            ChatScreen(roomId = roomId)
         }
     }
 }

@@ -117,5 +117,5 @@ fun RoomItemPreview() {
 @Preview
 @Composable
 fun ChatRoomListScreenPreview() {
-    ChatRoomListScreen()
+    ChatRoomListScreen{}
 }
