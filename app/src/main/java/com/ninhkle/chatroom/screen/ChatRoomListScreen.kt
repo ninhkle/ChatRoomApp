@@ -32,7 +32,8 @@ import com.ninhkle.chatroom.viewmodel.RoomViewModel
 
 @Composable
 fun ChatRoomListScreen(
-    roomViewModel: RoomViewModel = viewModel()
+    roomViewModel: RoomViewModel = viewModel(),
+    onJoinClicked: (Room) -> Unit
 ) {
     val rooms by roomViewModel.rooms.observeAsState(emptyList())
     var showDialog by remember { mutableStateOf(false) }
@@ -44,8 +45,8 @@ fun ChatRoomListScreen(
         Text(text = "Chat Rooms", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn(content = {
-            items(rooms) {
-                RoomItem(room = it)
+            items(rooms) { room ->
+                RoomItem(room = room, onJoinClicked = { onJoinClicked(room)})
             }
         })
         Spacer(modifier = Modifier.height(16.dp))
@@ -93,13 +94,13 @@ fun ChatRoomListScreen(
 }
 
 @Composable
-fun RoomItem(room: Room) {
+fun RoomItem(room: Room, onJoinClicked: (Room) -> Unit) {
     Row(modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween) {
         Text(text = room.name, fontSize = 16.sp, fontWeight = FontWeight.Normal)
-        OutlinedButton(onClick = { /*TODO*/ }) {
+        OutlinedButton(onClick = { onJoinClicked(room) }) {
             Text(text = "Join")
         }
 
@@ -110,7 +111,7 @@ fun RoomItem(room: Room) {
 @Composable
 fun RoomItemPreview() {
     val roomSample : Room = Room("1", "RoomName")
-    RoomItem(roomSample)
+    RoomItem(roomSample) {}
 }
 
 @Preview

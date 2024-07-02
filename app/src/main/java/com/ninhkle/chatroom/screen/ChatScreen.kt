@@ -1,14 +1,15 @@
 package com.ninhkle.chatroom.screen
 
 import android.os.Build
-import android.os.Message
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +35,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import com.ninhkle.chatroom.data.Message
 
 @Composable
 fun ChatScreen(roomId : String) {
@@ -78,17 +80,32 @@ fun ChatMessageItem(message: Message) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        horizontalAlignment = /*if (message.isSentByCurrentUser) colorResource(id = R.color.purple_700) else */Color.Gray
+        horizontalAlignment = if (message.isSentByCurrentUser) Alignment.End else Alignment.Start
     ) {
         Box(modifier = Modifier
             .background(
-                Color.Gray,
+                if (message.isSentByCurrentUser) colorResource(id = R.color.purple_700) else Color.Gray,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(8.dp)) {
             Text(text = message.text,
                 color = Color.White,
                 style = TextStyle(fontSize = 16.sp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = message.senderFirstName,
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
+            )
+            Text(
+                text = formatTimestamp(message.timestamp), // Replace with logic
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
             )
         }
     }
